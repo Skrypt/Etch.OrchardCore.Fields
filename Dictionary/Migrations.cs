@@ -26,7 +26,7 @@ namespace Etch.OrchardCore.Fields.Dictionary
 
         public int Create()
         {
-            _contentDefinitionManager.MigrateFieldSettings<DictionaryField, DictionaryFieldSettings>();
+            _contentDefinitionManager.MigrateFieldSettingsAsync<DictionaryField, DictionaryFieldSettings>();
 
             return 1;
         }

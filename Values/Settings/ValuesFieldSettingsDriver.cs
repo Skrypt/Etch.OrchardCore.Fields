@@ -1,6 +1,7 @@
 ﻿using Etch.OrchardCore.Fields.Values.Fields;
 using OrchardCore.ContentManagement.Metadata.Models;
 using OrchardCore.ContentTypes.Editors;
+using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.Views;
 using System.Threading.Tasks;
 
@@ -12,11 +13,15 @@ namespace Etch.OrchardCore.Fields.Values.Settings
 
         #region Edit
 
-        public override IDisplayResult Edit(ContentPartFieldDefinition model)
+        public override IDisplayResult Edit(ContentPartFieldDefinition partFieldDefinition, BuildEditorContext context)
         {
             return Initialize<ValuesFieldSettings>("ValuesFieldSettings_Edit", viewModel =>
             {
-                model.PopulateSettings(viewModel);
+                var settings = partFieldDefinition.GetSettings<ValuesFieldSettings>();
+
+                viewModel.EmptyMessage = settings.EmptyMessage;
+                viewModel.Hint = settings.Hint;
+                viewModel.NewItemPlaceholder = settings.NewItemPlaceholder;
             })
             .Location("Content");
         }
@@ -30,7 +35,7 @@ namespace Etch.OrchardCore.Fields.Values.Settings
                 context.Builder.WithSettings(settings);
             }
 
-            return Edit(model);
+            return Edit(model, context);
         }
 
         #endregion

@@ -26,7 +26,7 @@ namespace Etch.OrchardCore.Fields.ResponsiveMedia
 
         public int Create()
         {
-            _contentDefinitionManager.MigrateFieldSettings<ResponsiveMediaField, ResponsiveMediaFieldSettings>();
+            _contentDefinitionManager.MigrateFieldSettingsAsync<ResponsiveMediaField, ResponsiveMediaFieldSettings>();
 
             return 1;
         }

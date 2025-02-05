@@ -26,7 +26,7 @@ namespace Etch.OrchardCore.Fields.Values
 
         public int Create()
         {
-            _contentDefinitionManager.MigrateFieldSettings<ValuesField, ValuesFieldSettings>();
+            _contentDefinitionManager.MigrateFieldSettingsAsync<ValuesField, ValuesFieldSettings>();
 
             return 1;
         }

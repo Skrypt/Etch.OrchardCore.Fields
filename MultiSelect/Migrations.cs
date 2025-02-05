@@ -26,7 +26,7 @@ namespace Etch.OrchardCore.Fields.MultiSelect
 
         public int Create()
         {
-            _contentDefinitionManager.MigrateFieldSettings<MultiSelectField, MultiSelectFieldSettings>();
+            _contentDefinitionManager.MigrateFieldSettingsAsync<MultiSelectField, MultiSelectFieldSettings>();
 
             return 1;
         }

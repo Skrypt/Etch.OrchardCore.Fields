@@ -32,7 +32,7 @@ namespace Etch.OrchardCore.Fields.Colour.Drivers
 
         #region Overrides
 
-        public override async Task<IDisplayResult> EditAsync(ColourSettings section, BuildEditorContext context)
+        public override async Task<IDisplayResult> EditAsync(ISite site, ColourSettings section, BuildEditorContext context)
         {
             var user = _httpContextAccessor.HttpContext?.User;
 
@@ -47,7 +47,7 @@ namespace Etch.OrchardCore.Fields.Colour.Drivers
             }).Location("Content:3").OnGroup(Constants.GroupId);
         }
 
-        public override async Task<IDisplayResult> UpdateAsync(ColourSettings section, BuildEditorContext context)
+        public override async Task<IDisplayResult> UpdateAsync(ISite site, ColourSettings section, UpdateEditorContext context)
         {
             var user = _httpContextAccessor.HttpContext?.User;
 
@@ -66,7 +66,7 @@ namespace Etch.OrchardCore.Fields.Colour.Drivers
                 }
             }
 
-            return await EditAsync(section, context);
+            return await EditAsync(site, section, context);
         }
 
         #endregion

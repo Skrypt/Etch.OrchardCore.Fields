@@ -1,12 +1,13 @@
-﻿using Microsoft.Extensions.Localization;
-using Etch.OrchardCore.Fields.ResponsiveMedia.Fields;
+﻿using Etch.OrchardCore.Fields.ResponsiveMedia.Fields;
+using Etch.OrchardCore.Fields.ResponsiveMedia.Utils;
+using Microsoft.Extensions.Localization;
+using Newtonsoft.Json;
 using OrchardCore.ContentManagement.Metadata.Models;
 using OrchardCore.ContentTypes.Editors;
+using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.Views;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Etch.OrchardCore.Fields.ResponsiveMedia.Utils;
 using OrchardCore.Media;
+using System.Threading.Tasks;
 
 namespace Etch.OrchardCore.Fields.ResponsiveMedia.Settings
 {
@@ -29,10 +30,21 @@ namespace Etch.OrchardCore.Fields.ResponsiveMedia.Settings
 
         #endregion
 
-        public override IDisplayResult Edit(ContentPartFieldDefinition model)
+        public override IDisplayResult Edit(ContentPartFieldDefinition partFieldDefinition, BuildEditorContext context)
         {
-            return Initialize<ResponsiveMediaFieldSettings>("ResponsiveMediaFieldSettings_Edit", viewModel => model.PopulateSettings(viewModel))
-                .Location("Content");
+            return Initialize<ResponsiveMediaFieldSettings>("ResponsiveMediaFieldSettings_Edit", viewModel =>
+            {
+                var settings = partFieldDefinition.GetSettings<ResponsiveMediaFieldSettings>();
+                viewModel.Required = settings.Required;
+                viewModel.AllowMediaText = settings.AllowMediaText;
+                viewModel.Breakpoints = settings.Breakpoints;
+                viewModel.FallbackData = settings.FallbackData;
+                viewModel.Hint = settings.Hint;
+                viewModel.LazyLoad = settings.LazyLoad;
+                viewModel.Multiple = settings.Multiple;
+                viewModel.Required = viewModel.Required;
+            })
+            .Location("Content");
         }
 
         public override async Task<IDisplayResult> UpdateAsync(ContentPartFieldDefinition model, UpdatePartFieldEditorContext context)
@@ -55,7 +67,8 @@ namespace Etch.OrchardCore.Fields.ResponsiveMedia.Settings
             {
                 settings.Breakpoints = viewModel.Breakpoints;
                 settings.GetBreakpoints();
-            } catch
+            }
+            catch
             {
                 context.Updater.ModelState.AddModelError(Prefix, T["Failed to parse breakpoints, make sure it only contains numeric values."]);
             }

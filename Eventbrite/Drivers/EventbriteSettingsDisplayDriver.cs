@@ -31,7 +31,7 @@ namespace Etch.OrchardCore.Fields.Eventbrite.Drivers
 
         #region Overrides
 
-        public override async Task<IDisplayResult> EditAsync(EventbriteSettings section, BuildEditorContext context)
+        public override async Task<IDisplayResult> EditAsync(ISite site, EventbriteSettings section, BuildEditorContext context)
         {
             var user = _httpContextAccessor.HttpContext?.User;
 
@@ -46,7 +46,7 @@ namespace Etch.OrchardCore.Fields.Eventbrite.Drivers
             }).Location("Content:3").OnGroup(Constants.SettingsGroupId);
         }
 
-        public override async Task<IDisplayResult> UpdateAsync(EventbriteSettings section, BuildEditorContext context)
+        public override async Task<IDisplayResult> UpdateAsync(ISite site, EventbriteSettings section, UpdateEditorContext context)
         {
             var user = _httpContextAccessor.HttpContext?.User;
 
@@ -64,7 +64,7 @@ namespace Etch.OrchardCore.Fields.Eventbrite.Drivers
                 section.PrivateToken = model.PrivateToken;
             }
 
-            return await EditAsync(section, context);
+            return await EditAsync(site, section, context);
         }
 
         #endregion Overrides

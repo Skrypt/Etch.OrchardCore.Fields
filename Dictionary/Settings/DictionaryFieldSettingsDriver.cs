@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using OrchardCore.ContentManagement.Metadata.Models;
 using OrchardCore.ContentTypes.Editors;
+using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.Views;
 using System;
 using System.Collections.Generic;
@@ -32,11 +33,15 @@ namespace Etch.OrchardCore.Fields.Dictionary.Settings
 
         #region Edit
 
-        public override IDisplayResult Edit(ContentPartFieldDefinition model)
+        public override IDisplayResult Edit(ContentPartFieldDefinition partFieldDefinition, BuildEditorContext context)
         {
             return Initialize<DictionaryFieldSettings>("DictionaryFieldSettings_Edit", viewModel =>
                 {
-                    model.PopulateSettings(viewModel);
+                    var settings = partFieldDefinition.GetSettings<DictionaryFieldSettings>();
+                    viewModel.DefaultData = settings.DefaultData;
+                    viewModel.Hint = settings.Hint;
+                    viewModel.MaxEntries = settings.MaxEntries;
+                    viewModel.MinEntries = settings.MinEntries;
                 })
                 .Location("Content");
         }
@@ -61,7 +66,7 @@ namespace Etch.OrchardCore.Fields.Dictionary.Settings
                 context.Builder.WithSettings(settings);
             }
 
-            return Edit(model);
+            return Edit(model, context);
         }
 
         #endregion Edit

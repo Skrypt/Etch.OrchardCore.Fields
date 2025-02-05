@@ -16,11 +16,11 @@ namespace Etch.OrchardCore.Fields.Eventbrite
 
         public IStringLocalizer T { get; set; }
 
-        public Task BuildNavigationAsync(string name, NavigationBuilder builder)
+        public ValueTask BuildNavigationAsync(string name, NavigationBuilder builder)
         {
             if (!string.Equals(name, "admin", StringComparison.OrdinalIgnoreCase))
             {
-                return Task.CompletedTask;
+                return ValueTask.CompletedTask;
             }
 
             builder
@@ -31,7 +31,7 @@ namespace Etch.OrchardCore.Fields.Eventbrite
                         .LocalNav()
                     ));
 
-            return Task.CompletedTask;
+            return ValueTask.CompletedTask;
         }
     }
 }
