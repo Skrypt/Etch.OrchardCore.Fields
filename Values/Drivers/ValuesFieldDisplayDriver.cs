@@ -61,11 +61,11 @@ namespace Etch.OrchardCore.Fields.Values.Drivers
             });
         }
 
-        public override async Task<IDisplayResult> UpdateAsync(ValuesField field, IUpdateModel updater, UpdateFieldEditorContext context)
+        public override async Task<IDisplayResult> UpdateAsync(ValuesField field, UpdateFieldEditorContext context)
         {
             var model = new EditValuesFieldViewModel();
 
-            await updater.TryUpdateModelAsync(model, Prefix, m => m.Data);
+            await context.Updater.TryUpdateModelAsync(model, Prefix, m => m.Data);
 
             field.Data = JsonConvert.DeserializeObject<List<string>>(model.Data);
 

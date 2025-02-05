@@ -68,11 +68,11 @@ namespace Etch.OrchardCore.Fields.Dictionary.Drivers
             });
         }
 
-        public override async Task<IDisplayResult> UpdateAsync(DictionaryField field, IUpdateModel updater, UpdateFieldEditorContext context)
+        public override async Task<IDisplayResult> UpdateAsync(DictionaryField field, UpdateFieldEditorContext context)
         {
             var model = new EditDictionaryFieldViewModel();
 
-            await updater.TryUpdateModelAsync(model, Prefix, m => m.Data);
+            await context.Updater.TryUpdateModelAsync(model, Prefix, m => m.Data);
 
             var settings = GetSettings(context);
 
@@ -80,12 +80,12 @@ namespace Etch.OrchardCore.Fields.Dictionary.Drivers
 
             if (settings?.MinEntries > 0 && (field.Data == null || field.Data.Count < settings.MinEntries))
             {
-                updater.ModelState.AddModelError($"{Prefix}.{nameof(model.Data)}", T["You must specify at least {0} items.", settings.MinEntries]);
+                context.Updater.ModelState.AddModelError($"{Prefix}.{nameof(model.Data)}", T["You must specify at least {0} items.", settings.MinEntries]);
             }
 
             if (settings?.MaxEntries > 0 && field.Data?.Count > settings.MaxEntries)
             {
-                updater.ModelState.AddModelError($"{Prefix}.{nameof(model.Data)}", T["You can specify at most {0} items.", settings.MaxEntries]);
+                context.Updater.ModelState.AddModelError($"{Prefix}.{nameof(model.Data)}", T["You can specify at most {0} items.", settings.MaxEntries]);
             }
 
             return Edit(field, context);

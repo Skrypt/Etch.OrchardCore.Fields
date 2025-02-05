@@ -77,15 +77,15 @@ namespace Etch.OrchardCore.Fields.ResponsiveMedia.Drivers
             });
         }
 
-        public override async Task<IDisplayResult> UpdateAsync(ResponsiveMediaField field, IUpdateModel updater, UpdateFieldEditorContext context)
+        public override async Task<IDisplayResult> UpdateAsync(ResponsiveMediaField field, UpdateFieldEditorContext context)
         {
-            if (await updater.TryUpdateModelAsync(field, Prefix, f => f.Data))
+            if (await context.Updater.TryUpdateModelAsync(field, Prefix, f => f.Data))
             {
                 var settings = context.PartFieldDefinition.GetSettings<ResponsiveMediaFieldSettings>();
 
                 if (settings.Required && !JsonConvert.DeserializeObject<IList<ResponsiveMediaItem>>(field.Data).Any())
                 {
-                    updater.ModelState.AddModelError(Prefix, S["{0}: Media is required.", context.PartFieldDefinition.DisplayName()]);
+                    context.Updater.ModelState.AddModelError(Prefix, S["{0}: Media is required.", context.PartFieldDefinition.DisplayName()]);
                 }
 
             }

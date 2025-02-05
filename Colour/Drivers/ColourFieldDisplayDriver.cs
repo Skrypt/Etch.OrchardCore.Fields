@@ -29,11 +29,11 @@ namespace Etch.OrchardCore.Fields.Colour.Drivers
             });
         }
 
-        public override async Task<IDisplayResult> UpdateAsync(ColourField field, IUpdateModel updater, UpdateFieldEditorContext context)
+        public override async Task<IDisplayResult> UpdateAsync(ColourField field, UpdateFieldEditorContext context)
         {
             var model = new EditCodeFieldViewModel();
 
-            if (await updater.TryUpdateModelAsync(model, Prefix, m => m.Value))
+            if (await context.Updater.TryUpdateModelAsync(model, Prefix, m => m.Value))
             {
                 field.Value = model.Value;
             }

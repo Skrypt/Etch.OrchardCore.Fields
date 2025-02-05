@@ -5,6 +5,7 @@ using Etch.OrchardCore.Fields.MultiSelect.ViewModels;
 using Newtonsoft.Json;
 using OrchardCore.ContentManagement.Metadata.Models;
 using OrchardCore.ContentTypes.Editors;
+using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.Views;
 
 namespace Etch.OrchardCore.Fields.MultiSelect.Settings
@@ -15,7 +16,7 @@ namespace Etch.OrchardCore.Fields.MultiSelect.Settings
 
         #region Edit
 
-        public override IDisplayResult Edit(ContentPartFieldDefinition model)
+        public override IDisplayResult Edit(ContentPartFieldDefinition model, BuildEditorContext context)
         {
             return Initialize<EditMultiSelectFieldSettingsViewModel>("MultiSelectFieldSettings_Edit", viewModel =>
             {
@@ -41,7 +42,7 @@ namespace Etch.OrchardCore.Fields.MultiSelect.Settings
                 });
             }
 
-            return Edit(model);
+            return Edit(model, context);
         }
 
         #endregion

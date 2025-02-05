@@ -59,11 +59,11 @@ namespace Etch.OrchardCore.Fields.MultiSelect.Drivers
             });
         }
 
-        public override async Task<IDisplayResult> UpdateAsync(MultiSelectField field, IUpdateModel updater, UpdateFieldEditorContext context)
+        public override async Task<IDisplayResult> UpdateAsync(MultiSelectField field, UpdateFieldEditorContext context)
         {
             var model = new EditMultiSelectFieldViewModel();
 
-            if (await updater.TryUpdateModelAsync(model, Prefix, m => m.SelectedValues)) {
+            if (await context.Updater.TryUpdateModelAsync(model, Prefix, m => m.SelectedValues)) {
                 field.SelectedValues = model.SelectedValues;
             }
 

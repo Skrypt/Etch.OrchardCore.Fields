@@ -43,9 +43,9 @@ namespace Etch.OrchardCore.Fields.RenderAlias.Drivers
             });
         }
 
-        public override async Task<IDisplayResult> UpdateAsync(RenderAliasField field, IUpdateModel updater, UpdateFieldEditorContext context)
+        public override async Task<IDisplayResult> UpdateAsync(RenderAliasField field, UpdateFieldEditorContext context)
         {
-            await updater.TryUpdateModelAsync(field, Prefix);
+            await context.Updater.TryUpdateModelAsync(field, Prefix);
 
             return Edit(field, context);
         }

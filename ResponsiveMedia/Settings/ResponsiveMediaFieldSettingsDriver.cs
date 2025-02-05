@@ -75,7 +75,7 @@ namespace Etch.OrchardCore.Fields.ResponsiveMedia.Settings
 
             context.Builder.WithSettings(settings);
 
-            return Edit(model);
+            return Edit(model, context);
         }
     }
 }

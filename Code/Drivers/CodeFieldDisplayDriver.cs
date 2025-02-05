@@ -41,11 +41,11 @@ namespace Etch.OrchardCore.Fields.Code.Drivers
             });
         }
 
-        public override async Task<IDisplayResult> UpdateAsync(CodeField field, IUpdateModel updater, UpdateFieldEditorContext context)
+        public override async Task<IDisplayResult> UpdateAsync(CodeField field, UpdateFieldEditorContext context)
         {
             var model = new EditCodeFieldViewModel();
 
-            if (await updater.TryUpdateModelAsync(model, Prefix, m => m.Value))
+            if (await context.Updater.TryUpdateModelAsync(model, Prefix, m => m.Value))
             {
                 field.Value = model.Value;
             }

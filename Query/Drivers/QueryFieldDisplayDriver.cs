@@ -45,11 +45,11 @@ namespace Etch.OrchardCore.Fields.Query.Drivers
             });
         }
 
-        public override async Task<IDisplayResult> UpdateAsync(QueryField field, IUpdateModel updater, UpdateFieldEditorContext context)
+        public override async Task<IDisplayResult> UpdateAsync(QueryField field, UpdateFieldEditorContext context)
         {
             var model = new EditQueryFieldViewModel();
 
-            if (await updater.TryUpdateModelAsync(model, Prefix, m => m.Value))
+            if (await context.Updater.TryUpdateModelAsync(model, Prefix, m => m.Value))
             {
                 field.Value = model.Value;
             }
